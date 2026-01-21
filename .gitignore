@@ -1,0 +1,131 @@
+############################################################
+# .NET + Aspire + Node.js Hybrid .gitignore
+############################################################
+
+############################
+# Visual Studio / .NET
+############################
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+out/
+artifacts/
+
+# Visual Studio cache
+.vs/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Logs
+*.log
+logs/
+
+# Publish output
+publish/
+app.publish/
+
+# ASP.NET generated files
+wwwroot/lib/
+
+# Azure Functions local settings
+local.settings.json
+
+############################
+# Aspire-specific
+############################
+# Aspire AppHost build artifacts
+**/AppHost/bin/
+**/AppHost/obj/
+
+# Aspire distributed app state
+**/.aspire/
+**/AppHost/.aspire/
+
+# Aspire dashboard cache
+**/.aspire-dashboard/
+
+# Aspire manifest output
+**/AppHost/ServiceDefaults/*.json
+
+############################
+# Node.js / JavaScript
+############################
+# Node modules
+node_modules/
+
+# Package manager lock files (optional)
+# Uncomment if you want to enforce a single lockfile type
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+.cache/
+.next/
+.nuxt/
+out/
+
+# Vite / Webpack / Parcel
+.vite/
+.vite-cache/
+.cache/
+*.tsbuildinfo
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+############################
+# Container / Orchestration
+############################
+# Docker
+docker-compose.override.yml
+**/obj/Docker/publish/
+**/obj/Docker/empty/
+
+# Podman / container tooling
+.podman/
+container-build/
+
+############################
+# OS-specific
+############################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+############################
+# Editor-specific
+############################
+# VS Code
+.vscode/
+.history/
+
+# JetBrains
+.idea/
+*.iml
+
+############################
+# Optional: test snapshots
+############################
+*.snap

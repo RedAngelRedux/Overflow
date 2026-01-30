@@ -1,0 +1,46 @@
+diff --git a/QuestionService/Program.cs b/QuestionService/Program.cs
+index cd9730c..1e2f053 100644
+--- a/QuestionService/Program.cs
++++ b/QuestionService/Program.cs
+@@ -1,3 +1,5 @@
++using Scalar.AspNetCore;
++
+ var builder = WebApplication.CreateBuilder(args);
+ 
+ // Add services to the container.
+@@ -11,7 +13,22 @@ var app = builder.Build();
+ // Configure the HTTP request pipeline.
+ if (app.Environment.IsDevelopment())
+ {
+-    app.MapOpenApi();
++    app.MapOpenApi();  // exposes /openapi/v1.json
++
++    // // NOTE:  This section describes how to add Swagger UI
++    // // Step 1:  Install NuGet Swashbuckle.AspNetCore.SwaggerUI
++    // // Step 2:  Add the follwoing statement here...
++    // app.UserSwaggerUI(options =>
++    // {
++    //      options.SwaggerEndpoint("/openapi/v1.json","v1");
++    // });
++    // // Step 3:  Browse to https://localhost:<port>/swagger
++
++    // NOTE:  This section describes how to add Scalar (Microsoft recommended OpenAPI UI)
++    // Step 1:  Install NuGet Scalar.AspNetCore
++    // Step 2:  Add the follwoing statement here...
++    app.MapScalarApiReference();
++    // Step 3:  Browse to https://localhost:<port>/scalar
+ }
+ 
+ app.UseAuthorization();
+diff --git a/QuestionService/QuestionService.csproj b/QuestionService/QuestionService.csproj
+index d7d6d61..ee278ed 100644
+--- a/QuestionService/QuestionService.csproj
++++ b/QuestionService/QuestionService.csproj
+@@ -8,6 +8,7 @@
+ 
+   <ItemGroup>
+     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
++    <PackageReference Include="Scalar.AspNetCore" Version="2.12.24" />
+   </ItemGroup>
+ 
+   <ItemGroup>

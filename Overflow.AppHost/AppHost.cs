@@ -1,6 +1,20 @@
-var builder = DistributedApplication.CreateBuilder(args);
+namespace Overflow.AppHost;
 
-var keycloak = builder.AddKeycloak("keycloak", 6001)
-    .WithDataVolume("keycloak-data");
+using Projects;
 
-builder.Build().Run();
+public class AppHost
+{
+    public static void Main(string[] args)
+    {
+        var builder = DistributedApplication.CreateBuilder(args);
+
+        var keycloak = builder.AddKeycloak("keycloak", 6001)
+            .WithDataVolume("keycloak-data");
+
+        var questionService = builder.AddProject<QuestionService>("question-service")
+            .WithReference(keycloak)
+            .WaitFor(keycloak);
+
+        builder.Build().Run();
+    }
+}

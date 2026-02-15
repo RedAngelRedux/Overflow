@@ -1,0 +1,65 @@
+diff --git a/Overflow.AppHost/AppHost.cs b/Overflow.AppHost/AppHost.cs
+index ccd5cf4..7f93ea1 100644
+--- a/Overflow.AppHost/AppHost.cs
++++ b/Overflow.AppHost/AppHost.cs
+@@ -8,15 +8,27 @@ public class AppHost
+     {
+         var builder = DistributedApplication.CreateBuilder(args);
+ 
+-#pragma warning disable ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
++#pragma warning disable ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change 
++                                              // or removal in future updates. Suppress this diagnostic to proceed.
+         var keycloak = builder.AddKeycloak("keycloak", 6001)
+-            .WithoutHttpsCertificate()  // This is just temporary so we can test using Postman and ensure it is pinging the non-ssl url
++            .WithoutHttpsCertificate()  // This is just temporary so we can test using Postman and ensure it is //
++                                        // pinging the non-ssl url
+             .WithDataVolume("keycloak-data");
+-#pragma warning restore ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
++#pragma warning restore ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change
++        // or removal in future updates. Suppress this diagnostic to proceed.
++
++        var postgres = builder.AddPostgres("postgres", port: 5433)
++            .WithDataVolume("postgres-data")
++            .WithPgAdmin();
++
++        var questionDb = postgres.AddDatabase("questionDb");
++
+ 
+         var questionService = builder.AddProject<QuestionService>("question-service")
+             .WithReference(keycloak)
+-            .WaitFor(keycloak);
++            .WithReference(questionDb)
++            .WaitFor(keycloak)
++            .WaitFor(questionDb);
+ 
+         builder.Build().Run();
+     }
+diff --git a/Overflow.AppHost/Overflow.AppHost.csproj b/Overflow.AppHost/Overflow.AppHost.csproj
+index e98d72c..f90db1b 100644
+--- a/Overflow.AppHost/Overflow.AppHost.csproj
++++ b/Overflow.AppHost/Overflow.AppHost.csproj
+@@ -10,6 +10,7 @@
+ 
+   <ItemGroup>
+     <PackageReference Include="Aspire.Hosting.Keycloak" Version="13.1.1-preview.1.26105.8" />
++    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.1.1" />
+   </ItemGroup>
+ 
+   <ItemGroup>
+diff --git a/QuestionService/QuestionService.csproj b/QuestionService/QuestionService.csproj
+index f6cdcbe..d69972a 100644
+--- a/QuestionService/QuestionService.csproj
++++ b/QuestionService/QuestionService.csproj
+@@ -8,7 +8,12 @@
+ 
+   <ItemGroup>
+     <PackageReference Include="Aspire.Keycloak.Authentication" Version="13.1.0-preview.1.25616.3" />
++    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.1" />
+     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
++    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.3">
++      <PrivateAssets>all</PrivateAssets>
++      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
++    </PackageReference>
+     <PackageReference Include="Scalar.AspNetCore" Version="2.12.24" />
+   </ItemGroup>
+ 

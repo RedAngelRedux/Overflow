@@ -1,0 +1,53 @@
+You are helping me write a commit message that serves as long-term documentation for my .NET Aspire projects.
+
+Analyze the following git diff and produce a commit message that is:
+
+- Accurate to the diff
+- Written for my future self
+- Focused on Aspire concepts, resource configuration, and distributed app patterns
+
+Your commit message must include the following sections:
+
+1. **Title (Imperative, One Sentence)**
+   Summarize the core change in a clear, imperative style.
+
+2. **What Was Changed**
+   Describe the technical changes shown in the diff:
+   - New files, removed files, modified files
+   - New Aspire resources (Keycloak, databases, APIs, dashboards, etc.)
+   - Changes to Program.cs, AppHost, ServiceDefaults, or resource configuration
+   - Any new environment variables, bindings, ports, or connection strings
+
+3. **Why It Was Changed**
+   Explain the purpose behind the change:
+   - What problem it solves
+   - What feature or capability it enables
+   - Why this matters in an Aspire distributed application
+
+4. **How It Works (Aspire-Specific Explanation)**
+   Provide a concise explanation of how the new code integrates into Aspire:
+   - How the resource is registered in the AppHost
+   - How services depend on each other
+   - How configuration flows through Aspire (connection strings, secrets, bindings)
+   - Any lifecycle or orchestration behavior relevant to the change
+
+5. **Migration / Learning Insight**
+   Capture what I should remember for future projects:
+   - Patterns used (e.g., adding Keycloak, adding a database, wiring up an API)
+   - Gotchas or ordering requirements
+   - Any Aspire conventions demonstrated in the diff
+   - Anything that will help me repeat this in a new project
+
+6. **Future Reference**
+   List any commands, APIs, configuration keys, or patterns that will matter later:
+   - CLI commands used
+   - NuGet packages added
+   - Aspire resource methods (e.g., `AddKeycloakContainer`, `AddPostgres`, `WithReference`)
+   - Important environment variables or settings
+
+7. **Optional Notes**
+   Include anything else in the diff that is worth remembering.
+
+Here is the diff to analyze:
+
+<DIFF HERE>

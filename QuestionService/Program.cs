@@ -7,6 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.AddServiceDefaults();
+builder.Services.AddAuthentication()
+    .AddKeycloakJwtBearer(serviceName: "keycloak", realm: "overflow", options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.Audience = "overflow";
+
+    });
 
 var app = builder.Build();
 
@@ -31,7 +38,11 @@ if (app.Environment.IsDevelopment())
     // Step 3:  Browse to https://localhost:<port>/scalar
 }
 
-app.UseAuthorization();
+/// <remarks>
+//  This statement is not needed for Authentication since we are using Keycloak for that
+//  we may however, need it for Authorizatin (Roles) later on; not sure at this point.
+/// </remarks>
+// app.UseAuthorization();
 
 app.MapControllers();
 
